@@ -8,7 +8,7 @@
         private $id;
         private $title;
         private $user;
-        private $date_topic;
+        private $dateTopic;
         private $locked;
         private $category;
 
@@ -76,13 +76,13 @@
                 return $this;
         }
 
-        public function getdate_topic(){
-            $formattedDate = $this->date_topic->format("d/m/Y, H:i:s");
+        public function getdateTopic(){
+            $formattedDate = $this->dateTopic->format("d/m/Y, H:i:s");
             return $formattedDate;
         }
 
-        public function setdate_topic($date){
-            $this->date_topic = new \DateTime($date);
+        public function setdateTopic($date){
+            $this->dateTopic = new \DateTime($date);
             return $this;
         }
 

@@ -7,7 +7,7 @@
 
         private $id;
         private $text;
-        private $date_post;
+        private $datePost;
         private $user;
         private $topic;
 
@@ -75,13 +75,13 @@
                 return $this;
         }
 
-        public function getdate_post(){
-            $formattedDate = $this->date_post->format("d/m/Y, H:i:s");
+        public function getdatePost(){
+            $formattedDate = $this->datePost->format("d/m/Y, H:i:s");
             return $formattedDate;
         }
 
-        public function setdate_post($date){
-            $this->date_post = new \DateTime($date);
+        public function setdatePost($date){
+            $this->datePost = new \DateTime($date);
             return $this;
         }
 

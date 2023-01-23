@@ -9,7 +9,7 @@
         private $pseudo;
         private $email;
         private $password;
-        private $registration_date;
+        private $registrationDate;
 
         public function __construct($data){         
             $this->hydrate($data);        
@@ -95,21 +95,21 @@
 
 
         /**
-         * Get the value of registration_date
+         * Get the value of registrationDate
          */ 
-        public function getregistration_date()
+        public function getregistrationDate()
         {
-                return $this->registration_date;
+                return $this->registrationDate;
         }
 
         /**
-         * Set the value of registration_date
+         * Set the value of registrationDate
          *
          * @return  self
          */ 
-        public function setregistration_date($registration_date)
+        public function setregistrationDate($registrationDate)
         {
-                $this->registration_date = $registration_date;
+                $this->registrationDate = $registrationDate;
 
                 return $this;
         }
