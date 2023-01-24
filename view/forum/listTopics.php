@@ -10,7 +10,7 @@ $topics = $result["data"]['topics'];
 
 <h1>liste topics</h1>
 
-<table class="tabletopic">
+<table >
     <thead>
         <th>ID</th>
         <th>Title</th>

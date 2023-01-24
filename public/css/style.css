@@ -11,3 +11,8 @@ thead{
 h1{
     color: blue;
 }
+
+#insclabel{
+   width: 100px;
+   color: blue;
+}
