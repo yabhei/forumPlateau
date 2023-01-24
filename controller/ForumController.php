@@ -52,6 +52,17 @@
 
         }
 
+        public function listTopicsByCategory($id){
+            $topicManager = new TopicManager();
+
+            return [
+                "view" => VIEW_DIR."forum/listTopics.php",
+                "data" => [
+                    "topics" => $topicManager->findTopicByCategory($id)
+                ]
+            ];
+        }
+
         public function userByEmail($email){
             $userManager = new UserManager();
 
