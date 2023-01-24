@@ -1,0 +1,13 @@
+table,td {
+
+    border: solid 1px black;
+
+}
+
+thead{
+    background-color: rgb(53, 160, 163);
+}
+
+h1{
+    color: blue;
+}

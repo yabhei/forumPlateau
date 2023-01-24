@@ -1,13 +1,13 @@
 <?php
 
-$categoies = $result["data"]['categoies'];
+$categories = $result["data"]['categories'];
     
 ?>
 
-<h1>liste categoies</h1>
+<h1>liste categories</h1>
 
 <?php
-foreach($categoies as $category ){
+foreach($categories as $category ){
 
     ?>
     <p><?=$category->getnameCategory()?></p>
