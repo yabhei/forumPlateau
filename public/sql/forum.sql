@@ -23,10 +23,10 @@ CREATE TABLE IF NOT EXISTS `category` (
   PRIMARY KEY (`id_category`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table forum.category: ~0 rows (approximately)
+-- Dumping data for table forum.category: ~2 rows (approximately)
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
 INSERT INTO `category` (`id_category`, `nameCategory`) VALUES
-	(1, 'conversation'),
+	(1, 'CONVERSATION'),
 	(2, 'QA');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 
@@ -42,13 +42,15 @@ CREATE TABLE IF NOT EXISTS `post` (
   KEY `topic_id` (`topic_id`),
   CONSTRAINT `topic_id` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id_topic`),
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table forum.post: ~0 rows (approximately)
+-- Dumping data for table forum.post: ~4 rows (approximately)
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
 INSERT INTO `post` (`id_post`, `text`, `datePost`, `user_id`, `topic_id`) VALUES
-	(1, '– Moi, je suis un fana de sport. Je fais de la', '2023-01-23', 1, 1),
-	(2, 'Qu’est ce que l’informatique ?', '2023-01-22', 2, 2);
+	(1, ' Moi, je suis un fana de sport. Je fais de lanatation, je joue au football, au tennis et au basket-ball et je fais du jogging régulièrement.', '2023-01-23', 1, 1),
+	(2, 'Qu’est ce que l’informatique ? C’est formidable. Ça permet de gagner du temps et d’éviter les transports en commun.', '2023-01-22', 2, 2),
+	(3, 'J´adore la musique ! J´ai une grande collection de C.D.. J´écoute surtout de la musique rock mais j´aime aussi le rap et la musique «dance». ', '2023-01-24', 1, 1),
+	(4, ' Que pensez-vous du télétravail ? C’est formidable. Ça permet de gagner du temps et d’éviter les transports en commun.', '2023-01-24', 2, 2);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 
 -- Dumping structure for table forum.topic
@@ -66,10 +68,10 @@ CREATE TABLE IF NOT EXISTS `topic` (
   CONSTRAINT `user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table forum.topic: ~0 rows (approximately)
+-- Dumping data for table forum.topic: ~2 rows (approximately)
 /*!40000 ALTER TABLE `topic` DISABLE KEYS */;
 INSERT INTO `topic` (`id_topic`, `title`, `dateTopic`, `locked`, `user_id`, `category_id`) VALUES
-	(1, 'loisirs', '2023-01-23', 0, 1, 1),
+	(1, 'loisirs', '2023-01-23', 1, 1, 1),
 	(2, 'informatique', '2023-01-22', 0, 2, 2);
 /*!40000 ALTER TABLE `topic` ENABLE KEYS */;
 
@@ -83,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table forum.user: ~0 rows (approximately)
+-- Dumping data for table forum.user: ~2 rows (approximately)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id_user`, `pseudo`, `email`, `password`, `registrationDate`) VALUES
 	(1, 'yabhei', 'abc@gmail.com', '12345', '2023-01-23'),
