@@ -1,10 +1,10 @@
-
-
-
-
 <?php
 
+
+
 $topics = $result["data"]['topics'];
+$users = $result["data"]['users'];
+$categories = $result["data"]['categories'];
     
 ?>
 
@@ -21,8 +21,6 @@ $topics = $result["data"]['topics'];
     <tbody>
 <?php
 foreach($topics as $topic ){
-    // echo $topic->getlocked();
-    // die();
 
     ?>
     <tr>
@@ -41,3 +39,57 @@ foreach($topics as $topic ){
     </tbody>
 
 </table>
+
+
+<h3>Ajouter un Topic :</h3>
+    <form action="index.php?ctrl=forum&action=addtopic&id=<?= $topic->getcategory()->getId() ?>" method="post">
+        <p>
+            <label id="ajoutetopic">Title :</label>
+            <input type="text" name="title" >
+        </p>
+        <p>
+            <label id="ajoutetopic">Date :</label>
+            <input type="date" name="date" >
+        </p>
+        <p>
+            <label id="ajoutetopic">Status :</label>
+            <input type="radio" name="status" value="1"> OPEN
+            <input type="radio" name="status" value="0"> CLOSED
+        </p>
+        <p>
+            <label id="ajoutetopic">User :</label>
+
+            <select name="user" id="user">
+                <?php
+                foreach($users as $user){ 
+                    ?>
+                    <option value="<?=$user->getId(); ?>"><?=$user->getpseudo(); ?></option>
+                <?php
+                }
+                 ?>
+                
+            </select>
+            
+            
+           
+        </p>
+        
+        <p>
+        <label id="ajoutetopic">Category :</label>
+        <select name="category" id="category">
+                <?php
+                foreach($categories as $category){ 
+                    ?>
+                    <option value="<?=$category->getId(); ?>"><?=$category->getnameCategory(); ?></option>
+                <?php
+                }
+                 ?>
+                
+            </select>
+        </p>
+
+        <input type="submit" value="Ajouter">
+      
+    </form>
+
+</form>

@@ -12,19 +12,60 @@
 
     class ForumController extends AbstractController implements ControllerInterface{
 
-        public function index(){
-          
+        public function index(){}
 
-           $topicManager = new TopicManager();
+    public function listTopics()
+    {
+        $topicManager = new TopicManager();
+        $usermanager = new UserManager();
+        $category = new CategoryManager();
 
-            return [
-                "view" => VIEW_DIR."forum/listTopics.php",
-                "data" => [
-                    "topics" => $topicManager->findAll(["dateTopic", "DESC"])
-                ]
-            ];
-        
-        }
+        return [
+            "view" => VIEW_DIR."forum/listTopics.php",
+            "data" => [
+                "topics" => $topicManager->findAll(["dateTopic", "DESC"]),
+                "users" => $usermanager->findAll(),
+                "categories" => $category->findAll()
+            ]
+        ];
+    
+
+    }
+
+
+
+    public function addtopic($id)
+    {
+        // echo "hiiiiiiiiiii";
+        // die();
+        // if (isset($_GET['action']) && $_GET['action'] == "addtopic") {
+            // if (isset($_GET['submit'])) {
+                
+                $topicmanager = new TopicManager();
+                $data = [
+                    'title' => $_POST['title'],
+                    'dateTopic' => new \DateTime(),
+                    'locked' => false,
+                    'user_id' => 1,
+                    'category_id' => $id
+                ];
+                $topicmanager->add($data);
+                return $this->redirectTo("forum", "listTopics", $id);
+            }
+
+    // }
+    // }
+    
+    public function listUsers(){
+        $userManager = new UserManager();
+
+        return [
+            "view" => VIEW_DIR."forum/listTopics.php",
+            "data" => [
+                "users" => $userManager->findAll([])
+            ]
+        ];
+    }
 
         public function listCategories(){
             $categoryManager = new CategoryManager();
