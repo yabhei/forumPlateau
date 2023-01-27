@@ -17,15 +17,15 @@
     public function listTopics()
     {
         $topicManager = new TopicManager();
-        $usermanager = new UserManager();
-        $category = new CategoryManager();
+        // $usermanager = new UserManager();
+        // $category = new CategoryManager();
 
         return [
             "view" => VIEW_DIR."forum/listTopics.php",
             "data" => [
                 "topics" => $topicManager->findAll(["dateTopic", "DESC"]),
-                "users" => $usermanager->findAll(),
-                "categories" => $category->findAll()
+                // "users" => $usermanager->findAll(),
+                // "categories" => $category->findAll()
             ]
         ];
     
@@ -34,27 +34,31 @@
 
 
 
-    public function addtopic($id)
+    public function addTopic($id)
     {
-        // echo "hiiiiiiiiiii";
-        // die();
-        // if (isset($_GET['action']) && $_GET['action'] == "addtopic") {
-            // if (isset($_GET['submit'])) {
                 
                 $topicmanager = new TopicManager();
                 $data = [
                     'title' => $_POST['title'],
-                    'dateTopic' => new \DateTime(),
-                    'locked' => false,
-                    'user_id' => 1,
                     'category_id' => $id
                 ];
-                $topicmanager->add($data);
-                return $this->redirectTo("forum", "listTopics", $id);
+                $id_topic=$topicmanager->add($data);
+                self::addPost($id_topic);
+                return $this->redirectTo("forum", "listTopicsByCategory", $id);
             }
 
-    // }
-    // }
+
+    public function addPost($id){
+        $postmanager = new PostManager();
+        $data = [
+            'text' => $_POST['post'],
+            'topic_id' => $id
+        ];
+        $postmanager->add($data);
+        return $this->redirectTo("forum", "listPostsByTopic", $id);
+    }
+
+
     
     public function listUsers(){
         $userManager = new UserManager();
@@ -83,11 +87,13 @@
 
         public function listPostsByTopic($id){
             $postManager = new PostManager();
+            $topicmanager = new TopicManager();
 
             return [
                 "view" => VIEW_DIR."forum/listPosts.php",
                 "data" => [
-                    "posts" => $postManager->findPostsByTopic($id)
+                    "posts" => $postManager->findPostsByTopic($id),
+                    "topic" => $topicmanager-> findOneById($id)
                 ]
             ];
 
@@ -95,11 +101,13 @@
 
         public function listTopicsByCategory($id){
             $topicManager = new TopicManager();
+            $categoryManager = new CategoryManager();
 
             return [
                 "view" => VIEW_DIR."forum/listTopics.php",
                 "data" => [
-                    "topics" => $topicManager->findTopicByCategory($id)
+                    "topics" => $topicManager->findTopicByCategory($id),
+                    "category" => $categoryManager->findOneById($id)
                 ]
             ];
         }

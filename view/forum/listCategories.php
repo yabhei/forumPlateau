@@ -8,8 +8,8 @@ $categories = $result["data"]['categories'];
 <table>
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Category</th>
+            
+            <th>Categories</th>
         
         </tr>
     </thead>
@@ -19,7 +19,7 @@ foreach($categories as $category ){
 
     ?>
     <tr>
-        <td><?=$category->getId()?></td>
+        
         <td><a href="index.php?ctrl=forum&action=listTopicsByCategory&id=<?=$category->getId()?>"><?=$category->getnameCategory()?></a></td>
     
     </tr>

@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Sign Up :</h1>
-    <form action="index.php?ctrl=security&action=registerUser" method="post">
+    <h1>S'inscrire :</h1>
+    <form action="index.php?ctrl=security&action=registerUser" method="POST">
         <p>
             <label id="insclabel">Username :</label>
             <input type="text" name="username" >
@@ -25,10 +25,10 @@
         </p>
         <p>
             <label id="insclabel">Confirm Password :</label>
-            <input type="password" name="password" >
+            <input type="password" name="confirmpassword" >
         </p>
 
-        <input type="submit" value="Sign Up">
+        <input type="submit" name="submit" value="S'inscrire">
       
     </form>
 </body>
