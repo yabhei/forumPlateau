@@ -83,7 +83,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
                 $checkUser = $usermanager->findOneByEmail($email);
                 if($checkUser){
-                    if(password_verify($password == $checkUser->getpassword())){
+                    if(password_verify($password, $checkUser->getpassword())){
                         return [
                             "view" => VIEW_DIR . "layout.php"
                         ];
