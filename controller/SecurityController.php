@@ -85,7 +85,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
                 if($checkUser){
                     if(password_verify($password, $checkUser->getpassword())){
                         return [
-                            "view" => VIEW_DIR . "layout.php"
+                            "view" => VIEW_DIR . "homeLogin.php"
                         ];
                     }else{
                         echo "<script>alert('Email or Password isn't correct!')</script>";
