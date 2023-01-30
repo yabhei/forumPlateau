@@ -42,12 +42,14 @@
                         }
                         else{
                             ?>
-                            <a href="./view/security/login.php">Connexion</a>
+                            <a href="index.php?ctrl=security&action=loginUser">Connexion</a>
                             <a href="index.php?ctrl=security&action=registerUser">Inscription</a>
                             <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a>
                             <a href="index.php?ctrl=forum&action=listCategories">la liste des Categories</a>
+
                         <?php
                         }
+                        
                    
                         
                     ?>

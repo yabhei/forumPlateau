@@ -10,9 +10,9 @@
 </head>
 <body>
     <h1>Se connecter :</h1>
-    <form action="index.php?ctrl=security&action=" method="post">
+    <form action="index.php?ctrl=security&action=loginUser" method="post">
         <p>
-            <label id="insclabel">Username or E-mail :</label>
+            <label id="insclabel">E-mail :</label>
             <input type="text" name="loginUsername" >
         </p>
         <p>
@@ -21,7 +21,7 @@
         </p>
    
 
-        <input type="submit" value="Sign In">
+        <input type="submit" name="submit" value="Sign In">
       
     </form>
 </body>
