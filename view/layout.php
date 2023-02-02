@@ -36,16 +36,29 @@
                         
                         if(App\Session::getUser()){
                             ?>
-                            <a href="/security/viewProfile.html"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()?></a>
-                            <a href="/security/logout.html">Déconnexion</a>
+                            
+                            <ul>
+                            <a href="index.php?ctrl=forum&action=userInfos&id=<?= App\Session::getUser()->getId()?>"><span class="fas fa-user"></span>&nbsp;<?= App\Session::getUser()->getpseudo()?></a>
+                            </ul>
+                            <ul>
+                            <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a>
+                            </ul>
+                            <ul>
+                            <a href="index.php?ctrl=forum&action=listCategories">la liste des Categories</a>
+                            </ul>
+                            <ul>
+                            <a href="index.php?ctrl=home&action=logout">Déconnexion</a>
+                            </ul>
+                           
+                            <!-- /security/logout.php -->
                             <?php
                         }
                         else{
                             ?>
                             <a href="index.php?ctrl=security&action=loginUser">Connexion</a>
                             <a href="index.php?ctrl=security&action=registerUser">Inscription</a>
-                            <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a>
-                            <a href="index.php?ctrl=forum&action=listCategories">la liste des Categories</a>
+                            <!-- <a href="index.php?ctrl=forum&action=listTopics">la liste des topics</a>
+                            <a href="index.php?ctrl=forum&action=listCategories">la liste des Categories</a> -->
 
                         <?php
                         }

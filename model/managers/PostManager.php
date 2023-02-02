@@ -29,6 +29,16 @@
 
         }
 
+        public function deletePostByUser($id){
+        $sql = "DELETE FROM " . $this->tableName . " 
+            WHERE user_id = :id ";
+
+        DAO::delete($sql,['user' => $id]);
+
+           
+
+        }
+
 
         
 

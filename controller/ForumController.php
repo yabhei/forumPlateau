@@ -2,13 +2,14 @@
 
     namespace Controller;
 
-    use App\Session;
+
     use App\AbstractController;
     use App\ControllerInterface;
     use Model\Managers\TopicManager;
     use Model\Managers\PostManager;
     use Model\Managers\CategoryManager;
     use Model\Managers\UserManager;
+    use App\Session;
 
     class ForumController extends AbstractController implements ControllerInterface{
 
@@ -52,7 +53,8 @@
         $postmanager = new PostManager();
         $data = [
             'text' => $_POST['post'],
-            'topic_id' => $id
+            'topic_id' => $id,
+            // 'user_id' => App\Session::getUser()->getId()
         ];
         $postmanager->add($data);
         return $this->redirectTo("forum", "listPostsByTopic", $id);
@@ -121,6 +123,31 @@
                     "users" => $userManager->findOneByEmail($email)
                 ]
             ];
+        }
+
+
+        public function userInfos($id){
+        $userManager = new UserManager();
+
+        return [
+            "view" => VIEW_DIR."security/viewProfile.php",
+                "data" => [
+                    "userInfo" => $userManager->infoUserById($id)
+                ]
+        ];
+        }
+
+        public function deletePost($id){
+        $postManager = new PostManager();
+        $id_topic = $postManager->findOneById($id)->getTopic()->getId();
+        $postManager->delete($id);
+
+        $this->redirectTo("forum", "listPostsByTopic", $id_topic);
+        
+        }
+
+        public function blockUser(){
+
         }
 
         

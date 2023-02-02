@@ -22,10 +22,10 @@
         
    
         public function users(){
-            $this->restrictTo("ROLE_USER");
+            $this->restrictTo("ROLE_ADMIN");
 
             $manager = new UserManager();
-            $users = $manager->findAll(['registerdate', 'DESC']);
+            $users = $manager->findAll(['registrationDate', 'DESC']);
 
             return [
                 "view" => VIEW_DIR."security/users.php",
@@ -41,6 +41,17 @@
                 "view" => VIEW_DIR."rules.php"
             ];
         }
+
+        public function logout(){
+            unset($_SESSION['user']);
+        return [
+            "view" => VIEW_DIR."security/logout.php"
+        ];
+        }
+
+
+
+
 
         /*public function ajax(){
             $nb = $_GET['nb'];

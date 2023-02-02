@@ -21,6 +21,7 @@ $topic = $result["data"]['topic'];
            
             <th>Text</th>
             <th>Date </th>
+            <th>Edit </th>
             
         </tr>
     </thead>
@@ -31,8 +32,21 @@ foreach($posts as $post ){
     ?>
     <tr>
         
-        <td><?=$post->gettext()?></td>
+        <td><?= $post->gettext(); ?></td>
         <td><?=$post->getdatePost()?></td>
+        <?php
+        if(App\Session::getUser()) {
+            if ($post->getUser()->getId() == App\Session::getUser()->getId()) {
+                ?>
+        <td><a href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() //App\Session::getUser()->getId() ?>" >Delete</a></td>
+        <?php
+            }else {
+                ?>
+                <td><a href="" >Like</a></td>
+                <?php
+            }
+        }
+        ?>
         
     </tr>
     <?php

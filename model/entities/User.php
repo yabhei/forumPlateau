@@ -10,6 +10,8 @@
         private $email;
         private $password;
         private $registrationDate;
+        private $status;
+        private $role ;
 
         public function __construct($data){         
             $this->hydrate($data);        
@@ -115,4 +117,54 @@
         }
 
         
-    }
+
+        /**
+         * Get the value of status
+         */ 
+        public function getStatus()
+        {
+                return $this->status;
+        }
+
+        /**
+         * Set the value of status
+         *
+         * @return  self
+         */ 
+        public function setStatus($status)
+        {
+                $this->status = $status;
+
+                return $this;
+        }
+
+        public function hasRole($rl){
+                if($this->role == $rl){
+                        return true;
+                }else{
+                        return false;
+                }
+        }
+
+
+
+        /**
+         * Get the value of role
+         */ 
+        public function getRole()
+        {
+                return $this->role;
+        }
+
+        /**
+         * Set the value of role
+         *
+         * @return  self
+         */ 
+        public function setRole($role)
+        {
+                $this->role = $role;
+
+                return $this;
+        }
+}

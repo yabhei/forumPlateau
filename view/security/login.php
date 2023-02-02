@@ -10,7 +10,7 @@
 </head>
 <body>
     <h1>Se connecter :</h1>
-    <form action="index.php?ctrl=security&action=loginUser" method="post">
+    <form action="index.php?ctrl=security&action=loginUser" method="POST">
         <p>
             <label id="insclabel">E-mail :</label>
             <input type="text" name="loginUsername" >
