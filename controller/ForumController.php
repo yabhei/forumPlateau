@@ -4,13 +4,12 @@
 
 
     use App\AbstractController;
-    use App\ControllerInterface;
-    use Model\Managers\TopicManager;
-    use Model\Managers\PostManager;
-    use Model\Managers\CategoryManager;
-    use Model\Managers\UserManager;
-    use App\Session;
-
+use App\ControllerInterface;
+use Model\Managers\CategoryManager;
+use Model\Managers\PostManager;
+use Model\Managers\TopicManager;
+use Model\Managers\UserManager;
+use App\Session;
     class ForumController extends AbstractController implements ControllerInterface{
 
         public function index(){}
@@ -51,10 +50,11 @@
 
     public function addPost($id){
         $postmanager = new PostManager();
+        $userSession = new Session();
         $data = [
             'text' => $_POST['post'],
             'topic_id' => $id,
-            // 'user_id' => App\Session::getUser()->getId()
+            'user_id' => $userSession->getUser()->getId()
         ];
         $postmanager->add($data);
         return $this->redirectTo("forum", "listPostsByTopic", $id);
