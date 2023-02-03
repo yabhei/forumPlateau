@@ -34,9 +34,10 @@ class SecurityController extends AbstractController implements ControllerInterfa
             $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $confirm_password = filter_input(INPUT_POST, 'confirmpassword', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $checkUser = $usermanager->findOneByEmail($email);
+            $checkname = $usermanager->findOneByName($username);
 
             if ($username && $email && $password) {
-                if (!$checkUser) {
+                if (!$checkUser && !$checkname) {
                     if ($password == $confirm_password) {
 
                         $data = [

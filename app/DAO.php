@@ -44,6 +44,7 @@
                 //pour s'en servir aussitôt dans le controleur
                 return self::$bdd->lastInsertId();
                 
+                
             }
             catch(\Exception $e){
                 echo $e->getMessage();

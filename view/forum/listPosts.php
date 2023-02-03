@@ -1,4 +1,7 @@
 <?php
+use App\Session;
+
+$sessionObj = new Session();
 
 $posts = $result["data"]['posts'];
 $topic = $result["data"]['topic'];
@@ -22,12 +25,20 @@ $topic = $result["data"]['topic'];
             <th>Text</th>
             <th>Date </th>
             <th>Edit </th>
+        <?php
+            if ($sessionObj->isAdmin()) {
+        ?>
+            <th>Supprimer</th>
+        <?php
+            }
+        ?>
             
         </tr>
     </thead>
     <tbody>
 <?php
-foreach($posts as $post ){
+if(isset($posts)){
+  foreach($posts as $post ){
 
     ?>
     <tr>
@@ -38,24 +49,43 @@ foreach($posts as $post ){
         if(App\Session::getUser()) {
             if ($post->getUser()->getId() == App\Session::getUser()->getId()) {
                 ?>
-        <td><a href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() //App\Session::getUser()->getId() ?>" >Delete</a></td>
+        <td><a href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() ?>"><i class="material-icons">delete</i></a></td>
         <?php
             }else {
                 ?>
-                <td><a href="" >Like</a></td>
+                <td><a href=""  ><i class="material-icons" >favorite</i></a></td>
                 <?php
             }
         }
         ?>
+        <?php
+            if ($sessionObj->isAdmin()) {
+        ?>
+        <td><a href="index.php?ctrl=forum&action=deletePost&id=<?=$post->getId()?>" ><i class="material-icons">delete</i></a></td>
+        <?php
+            }
+        ?>
         
     </tr>
     <?php
-}?>
+}
+
+?>
     </tbody>
 
 </table>
 
-<?php 
+
+<?php
+}else {
+    ?>
+<h3><< THE TOPIC IS EMPTY !  >> <i class="material-icons">sentiment_dissatisfied</i> </h3>
+
+
+
+<?php    
+    
+} 
         if($topic != null && $topic->getlocked() == 1){
     ?>
         <form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="POST">

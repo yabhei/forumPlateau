@@ -9,7 +9,8 @@ thead{
 }
 
 h1{
-    color: blue;
+    color: rgb(50, 50, 202);
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 #insclabel{

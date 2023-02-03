@@ -10,6 +10,7 @@ use Model\Managers\PostManager;
 use Model\Managers\TopicManager;
 use Model\Managers\UserManager;
 use App\Session;
+use App\DAO;
     class ForumController extends AbstractController implements ControllerInterface{
 
         public function index(){}
@@ -17,15 +18,12 @@ use App\Session;
     public function listTopics()
     {
         $topicManager = new TopicManager();
-        // $usermanager = new UserManager();
-        // $category = new CategoryManager();
 
         return [
             "view" => VIEW_DIR."forum/listTopics.php",
             "data" => [
                 "topics" => $topicManager->findAll(["dateTopic", "DESC"]),
-                // "users" => $usermanager->findAll(),
-                // "categories" => $category->findAll()
+             
             ]
         ];
     
@@ -38,14 +36,38 @@ use App\Session;
     {
                 
                 $topicmanager = new TopicManager();
+                $userSession = new Session();
+
                 $data = [
                     'title' => $_POST['title'],
-                    'category_id' => $id
+                    'category_id' => $id,
+                    'user_id' => $userSession->getUser()->getId()
                 ];
                 $id_topic=$topicmanager->add($data);
                 self::addPost($id_topic);
                 return $this->redirectTo("forum", "listTopicsByCategory", $id);
             }
+
+    public function deleteTopic($id){
+        $topicManager = new TopicManager();
+        $id_category = $topicManager->findOneById($id)->getnameCategory()->getId();
+        $this->deletPostByTopic($id);
+        $topicManager->delete($id);
+        
+        $this->redirectTo("forum", "listTopicsByCategory", $id_category);
+        
+        }
+
+    
+
+    public function deletTopicByCategory($id){
+        $this->deletPostByTopic($id);
+        $sql = "DELETE FROM topic t  
+        WHERE t.category_id = :id "; 
+
+        return DAO::delete($sql, ['id' => $id]);
+
+    }
 
 
     public function addPost($id){
@@ -61,14 +83,28 @@ use App\Session;
     }
 
 
+
+
+    public function deletPostByTopic($id){
+        $sql = "DELETE FROM post p  
+        WHERE p.topic_id = :id "; 
+
+        return DAO::delete($sql, ['id' => $id]);
+
+    }
+
+
     
-    public function listUsers(){
-        $userManager = new UserManager();
+    public function users(){
+        $this->restrictTo("ROLE_ADMIN");
+
+        $manager = new UserManager();
+        $users = $manager->findAll(['registrationDate', 'DESC']);
 
         return [
-            "view" => VIEW_DIR."forum/listTopics.php",
+            "view" => VIEW_DIR."security/users.php",
             "data" => [
-                "users" => $userManager->findAll([])
+                "users" => $users
             ]
         ];
     }
@@ -146,9 +182,51 @@ use App\Session;
         
         }
 
-        public function blockUser(){
+    
+
+        public function deleteUser($id){
+        $userManager = new UserManager();
+
+        $userManager->delete($id);
+        $this->redirectTo("forum", "users");
 
         }
+
+        public function changeStatus($id){
+            $userManager = new UserManager();
+            if($userManager->findOneById($id)->getStatus()){
+            
+            $userManager->update($id,"status" , 0);
+            $this->redirectTo("forum", "users");
+            }else{
+                
+                $userManager->update($id, "status", 1);
+                $this->redirectTo("forum", "users");
+            }
+            
+        }
+
+        public function  deleteCategory($id){
+        $categoryManager = new CategoryManager();
+
+        $this->deletTopicByCategory($id);
+        $categoryManager->delete($id);
+
+        }
+
+        public function lockTopic($id){
+        $topicManager = new TopicManager();
+        if($topicManager->findOneById($id)->getlocked()){
+            
+            $topicManager->update($id,"locked" , 0);
+            $this->redirectTo("forum", "listTopics");
+            }else{
+                
+                $topicManager->update($id, "locked", 1);
+                $this->redirectTo("forum", "listTopics");
+            }
+        }
+
 
         
 

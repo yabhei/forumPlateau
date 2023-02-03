@@ -88,7 +88,7 @@
         /**
          * Get the value of topic
          */ 
-        public function gettopic()
+        public function getTopic()
         {
                 return $this->topic;
         }
@@ -98,7 +98,7 @@
          *
          * @return  self
          */ 
-        public function settopic($topic)
+        public function setTopic($topic)
         {
                 $this->topic = $topic;
 

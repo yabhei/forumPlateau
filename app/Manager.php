@@ -75,6 +75,14 @@
             return DAO::delete($sql, ['id' => $id]); 
         }
 
+        public function update($id,$colname,$value){
+            $sql = "UPDATE ".$this->tableName." u
+                    SET u.".$colname." = :status 
+                    WHERE u.id_".$this->tableName." = :id ";
+
+            return DAO::update($sql, ['id' => $id , 'status' => $value]); 
+        }
+
         private function generate($rows, $class){
             foreach($rows as $row){
                 yield new $class($row);

@@ -1,6 +1,8 @@
 <?php
 
+use App\Session;
 
+$sessionObj = new Session();
 
 $topics = $result["data"]['topics'];
 if(isset($result["data"]['category'])){
@@ -24,6 +26,14 @@ $category = $result["data"]['category'];
         <th>Title</th>
         <th>Date </th>
         <th>Status</th>
+        <th>User</th>
+        <?php
+            if ($sessionObj->isAdmin()) {
+        ?>
+            <th>Supprimer</th>
+        <?php
+            }
+        ?>
         
     </thead>
     <tbody>
@@ -36,11 +46,29 @@ foreach($topics as $topic ){
         <td><p><a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?=$topic->getId()?>"><?=$topic->getTitle()?></a></p></td>
         <td><?=$topic->getdateTopic()?></td>
         <td><?php
+    if($sessionObj->isAdmin() || $topic->getUser()->getId() == $sessionObj->getUser()->getId()){
         if ($topic->getlocked()) {
-            echo "Open";
+            ?>
+            <a href="index.php?ctrl=forum&action=lockTopic&id=<?=$topic->getId()?>"><i class="material-icons">lock_open</i></a>
+            <?php
+            // echo "Open";
         } else{
-            echo "Closed";
-        } ?></td>
+            ?>
+           <a href="index.php?ctrl=forum&action=lockTopic&id=<?=$topic->getId()?>"> <i class="material-icons">lock</i></a>
+            <?php
+            // echo "Closed";
+        }
+    }
+     ?>
+     </td>
+     <td><a href="index.php?ctrl=forum&action=userInfos&id=<?= $topic->getUser()->getId()?>"><span class="fas fa-user"></span>&nbsp;<?= $topic->getUser()->getpseudo()?></a></td>
+         <?php
+            if ($sessionObj->isAdmin()) {
+        ?>
+        <td><a href="index.php?ctrl=forum&action=deleteTopic&id=<?=$topic->getId()?>"><i class="material-icons">delete</i></a></td>
+        <?php
+            }
+        ?>
     </tr>
     <?php
 }?>

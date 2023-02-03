@@ -27,6 +27,18 @@
 
         }
 
+        public function findOneByName($username){
+            $sql =   "SELECT * 
+                      FROM " . $this->tableName . " u  
+                      WHERE u.pseudo = :username ";
+    
+            return $this->getOneOrNullResult(
+                DAO::select($sql, ['username' => $username], false),
+                $this->className
+            );
+    
+            }
+
         public function infoUserById($id){
             $sql =   "SELECT * 
                       FROM " . $this->tableName . " u  
