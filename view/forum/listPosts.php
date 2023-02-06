@@ -17,7 +17,9 @@ $topic = $result["data"]['topic'];
 <?php
         }
     ?>
-
+<?php
+if(isset($posts)){
+?>
 <table >
     <thead>
         <tr>
@@ -37,7 +39,6 @@ $topic = $result["data"]['topic'];
     </thead>
     <tbody>
 <?php
-if(isset($posts)){
   foreach($posts as $post ){
 
     ?>
@@ -79,15 +80,16 @@ if(isset($posts)){
 <?php
 }else {
     ?>
-<h3><< THE TOPIC IS EMPTY !  >> <i class="material-icons">sentiment_dissatisfied</i> </h3>
+<h3><< CETTE TOPIC EST VIDE ! <i class="material-icons">sentiment_dissatisfied</i> >>  </h3>
 
 
 
 <?php    
     
 } 
-        if($topic != null && $topic->getlocked() == 1){
-    ?>
+    if($topic != null && $topic->getlocked() ){
+            if ($sessionObj->getUser()->getStatus()) {
+        ?>
         <form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="POST">
         <p>
              <h3>Ajouter un Post :</h3>
@@ -102,6 +104,15 @@ if(isset($posts)){
     </form>
   
     <?php
-        }
+    }else{
+        ?>
+            <h3> << Vous êtes bloqué, vous ne pouvez pas ajouter de Post ! >></h3>
+    <?php 
+    }    
+    }else{
+        ?>
+            <h3> << Le topic est verrouillé, Vous ne pouvez pas ajouter de Post ! >></h3>
+    <?php 
+    }    
     ?>
 

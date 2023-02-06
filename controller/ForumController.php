@@ -34,12 +34,14 @@ use App\DAO;
 
     public function addTopic($id)
     {
+        $topicTitle = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+       
                 
                 $topicmanager = new TopicManager();
                 $userSession = new Session();
 
                 $data = [
-                    'title' => $_POST['title'],
+                    'title' =>  $topicTitle,
                     'category_id' => $id,
                     'user_id' => $userSession->getUser()->getId()
                 ];
@@ -50,7 +52,7 @@ use App\DAO;
 
     public function deleteTopic($id){
         $topicManager = new TopicManager();
-        $id_category = $topicManager->findOneById($id)->getnameCategory()->getId();
+        $id_category = $topicManager->findOneById($id)->getcategory()->getId();
         $this->deletPostByTopic($id);
         $topicManager->delete($id);
         
@@ -61,9 +63,15 @@ use App\DAO;
     
 
     public function deletTopicByCategory($id){
-        $this->deletPostByTopic($id);
-        $sql = "DELETE FROM topic t  
-        WHERE t.category_id = :id "; 
+        $topicManager = new TopicManager();
+        $topics = $topicManager->findTopicByCategory($id);
+        foreach($topics as $topic){
+            $this->deletPostByTopic($topic->getId());
+
+        }
+
+        $sql = "DELETE FROM topic   
+        WHERE category_id = :id "; 
 
         return DAO::delete($sql, ['id' => $id]);
 
@@ -71,10 +79,11 @@ use App\DAO;
 
 
     public function addPost($id){
+        $post = filter_input(INPUT_POST, 'post', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $postmanager = new PostManager();
         $userSession = new Session();
         $data = [
-            'text' => $_POST['post'],
+            'text' => $post,
             'topic_id' => $id,
             'user_id' => $userSession->getUser()->getId()
         ];
@@ -86,12 +95,23 @@ use App\DAO;
 
 
     public function deletPostByTopic($id){
-        $sql = "DELETE FROM post p  
-        WHERE p.topic_id = :id "; 
+        $sql = "DELETE FROM  post    
+        WHERE  topic_id = :id "; 
 
         return DAO::delete($sql, ['id' => $id]);
 
     }
+
+    public function deletePost($id){
+        $postManager = new PostManager();
+        $id_topic = $postManager->findOneById($id)->getTopic()->getId();
+        $postManager->delete($id);
+
+        $this->redirectTo("forum", "listPostsByTopic", $id_topic);
+        
+        }
+
+
 
 
     
@@ -121,6 +141,42 @@ use App\DAO;
         
 
         }
+
+
+        public function  deleteCategory($id){
+            $categoryManager = new CategoryManager();
+    
+            $this->deletTopicByCategory($id);
+            $categoryManager->delete($id);
+
+            return [
+                "view" => VIEW_DIR."forum/listCategories.php",
+                "data" => [
+                    "categories" => $categoryManager->findAll(["nameCategory", "ASC"])
+                ]
+            ];
+
+    
+            }
+
+
+        public function addCategory(){
+            $categoryManager = new CategoryManager();
+
+        $data = [
+            'nameCategory' => $_POST['nom']
+        ];
+
+        $categoryManager->add($data);
+
+        $this->redirectTo("forum", "listCategories");
+
+
+
+            }
+
+
+
 
 
         public function listPostsByTopic($id){
@@ -173,15 +229,7 @@ use App\DAO;
         ];
         }
 
-        public function deletePost($id){
-        $postManager = new PostManager();
-        $id_topic = $postManager->findOneById($id)->getTopic()->getId();
-        $postManager->delete($id);
-
-        $this->redirectTo("forum", "listPostsByTopic", $id_topic);
-        
-        }
-
+       
     
 
         public function deleteUser($id){
@@ -206,24 +254,20 @@ use App\DAO;
             
         }
 
-        public function  deleteCategory($id){
-        $categoryManager = new CategoryManager();
-
-        $this->deletTopicByCategory($id);
-        $categoryManager->delete($id);
-
-        }
+      
 
         public function lockTopic($id){
+
         $topicManager = new TopicManager();
+        $id_category = $topicManager->findOneById($id)->getcategory()->getId();
         if($topicManager->findOneById($id)->getlocked()){
             
             $topicManager->update($id,"locked" , 0);
-            $this->redirectTo("forum", "listTopics");
+            $this->redirectTo("forum", "listTopicsByCategory",$id_category);
             }else{
                 
                 $topicManager->update($id, "locked", 1);
-                $this->redirectTo("forum", "listTopics");
+                $this->redirectTo("forum", "listTopicsByCategory",$id_category);
             }
         }
 

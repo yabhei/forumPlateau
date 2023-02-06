@@ -51,7 +51,7 @@
                             <a href="index.php?ctrl=forum&action=listCategories"><i class="material-icons">view_list</i> la liste des Categories</a>
                             </ul>
                             <ul>
-                            <a href="index.php?ctrl=home&action=logout"><i class="material-icons">logout</i>   Déconnexion  </a>
+                            <a href="index.php?ctrl=security&action=logout"><i class="material-icons">logout</i>   Déconnexion  </a>
                             </ul>
                            
                             <!-- /security/logout.php -->

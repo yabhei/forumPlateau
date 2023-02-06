@@ -89,7 +89,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
                 if ($checkUser) {
                     if (password_verify($password, $checkUser->getpassword())) {
 
-                        if ($checkUser->getStatus()) {
+                        
 
                             Session::setUser($checkUser);
                             return [
@@ -100,7 +100,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
                                 ]
                             ];
 
-                        }
+                        
                     }else{
                         echo "<script>alert('Email or Password is not correct !')</script>";
                         return [
@@ -137,6 +137,26 @@ class SecurityController extends AbstractController implements ControllerInterfa
     }
 
     }
+
+    public function logout(){
+        unset($_SESSION['user']);
+    return [
+        "view" => VIEW_DIR."security/logout.php"
+    ];
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

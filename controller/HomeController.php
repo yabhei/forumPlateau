@@ -42,12 +42,7 @@
             ];
         }
 
-        public function logout(){
-            unset($_SESSION['user']);
-        return [
-            "view" => VIEW_DIR."security/logout.php"
-        ];
-        }
+     
 
 
 
