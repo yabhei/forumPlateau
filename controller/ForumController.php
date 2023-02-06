@@ -56,7 +56,7 @@ use App\DAO;
         $this->deletPostByTopic($id);
         $topicManager->delete($id);
         
-        $this->redirectTo("forum", "listTopicsByCategory", $id_category);
+        $this->redirectTo("forum", "listTopics");
         
         }
 
@@ -144,6 +144,7 @@ use App\DAO;
 
 
         public function  deleteCategory($id){
+           
             $categoryManager = new CategoryManager();
     
             $this->deletTopicByCategory($id);
@@ -161,10 +162,11 @@ use App\DAO;
 
 
         public function addCategory(){
+            $category = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $categoryManager = new CategoryManager();
 
         $data = [
-            'nameCategory' => $_POST['nom']
+            'nameCategory' =>  $category
         ];
 
         $categoryManager->add($data);

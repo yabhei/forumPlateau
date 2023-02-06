@@ -26,7 +26,7 @@ if(isset($posts)){
            
             <th>Text</th>
             <th>Date </th>
-            <th>Edit </th>
+            <th>Action </th>
         <?php
             if ($sessionObj->isAdmin()) {
         ?>
@@ -48,7 +48,12 @@ if(isset($posts)){
         <td><?=$post->getdatePost()?></td>
         <?php
         if(App\Session::getUser()) {
-            if ($post->getUser()->getId() == App\Session::getUser()->getId()) {
+            if ($sessionObj->isAdmin()){
+            ?>
+                <td><a href=""  ><i class="material-icons" >favorite</i></a></td>
+            <?php
+
+            }else if ($post->getUser()->getId() == App\Session::getUser()->getId()) {
                 ?>
         <td><a href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() ?>"><i class="material-icons">delete</i></a></td>
         <?php

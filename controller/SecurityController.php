@@ -140,9 +140,7 @@ class SecurityController extends AbstractController implements ControllerInterfa
 
     public function logout(){
         unset($_SESSION['user']);
-    return [
-        "view" => VIEW_DIR."security/logout.php"
-    ];
+        $this->redirectTo("home", "index");
     }
 
 

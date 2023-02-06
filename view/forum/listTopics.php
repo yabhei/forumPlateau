@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="style.css">
 <?php
 
 use App\Session;
@@ -36,6 +37,13 @@ $category = $result["data"]['category'];
         
         <?php
         }
+        ?>
+         <?php
+            if ($sessionObj->isAdmin()) {
+        ?>
+            <th>Supprimer</th>
+        <?php
+            }
         ?>
            
        
@@ -83,23 +91,37 @@ $category = $result["data"]['category'];
      </td>
      <td>
         <?php
-         if ($sessionObj->isAdmin() || $topic->getUser()->getId() == $sessionObj->getUser()->getId()) {
+                if ($sessionObj->isAdmin()) {
+                    ?>
+           <a href=""> <i class="material-icons">favorite</i></a>
+            <?php
+
+                }else if ( $topic->getUser()->getId() == $sessionObj->getUser()->getId()) {
              ?>
         <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>"><i class="material-icons">delete</i></a>
         <?php
          }else{
             ?>
-            <i class="material-icons">thumb_up</i>
+            <i class="material-icons">favorite</i>
             <?php
 
          }
          ?>
         </td>
+       
    
          <?php
         }
         ?>
-    
+         <td>
+        <?php
+            if ($sessionObj->isAdmin()) {
+        ?>
+          <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>"><i class="material-icons">delete</i></a>
+        <?php
+            }
+        ?>
+         </td>
     </tr>
     <?php
         } ?>

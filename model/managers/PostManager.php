@@ -20,7 +20,7 @@
              $sql =  " SELECT * 
                 FROM " . $this->tableName . " p 
                  WHERE p.topic_id = :id
-                 ORDER BY datePost DESC";
+                 ORDER BY datePost";
 
              return $this->getMultipleResults(
                  DAO::select($sql,['id'=>$id]),

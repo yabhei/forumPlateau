@@ -8,7 +8,7 @@ thead{
     background-color: rgb(53, 160, 163);
 }
 
-h1{
+h1, h3{
     color: rgb(50, 50, 202);
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
@@ -16,4 +16,8 @@ h1{
 #insclabel{
    width: 100px;
    color: blue;
+}
+
+label{
+    width: 30px;
 }
